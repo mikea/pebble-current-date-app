@@ -4,15 +4,15 @@ static Window *s_window;
 static TextLayer *s_text_layer;
 
 static void prv_select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(s_text_layer, "Select");
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "prv_select_click_handler");
 }
 
 static void prv_up_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(s_text_layer, "Up");
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "prv_up_click_handler");
 }
 
 static void prv_down_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(s_text_layer, "Down");
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "prv_down_click_handler");
 }
 
 static void prv_click_config_provider(void *context) {
@@ -21,12 +21,21 @@ static void prv_click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_DOWN, prv_down_click_handler);
 }
 
+char buf[256];
+
 static void prv_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
+  time_t current_time = time(NULL);
+  
   s_text_layer = text_layer_create(GRect(0, 72, bounds.size.w, 20));
-  text_layer_set_text(s_text_layer, "Press a button");
+  if (strftime(buf, sizeof buf, "%A %c", localtime(&current_time))) {
+    text_layer_set_text(s_text_layer, buf);
+  } else {
+    text_layer_set_text(s_text_layer, "ERROR");
+  }
+
   text_layer_set_text_alignment(s_text_layer, GTextAlignmentCenter);
   layer_add_child(window_layer, text_layer_get_layer(s_text_layer));
 }

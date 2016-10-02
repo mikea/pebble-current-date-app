@@ -1,29 +1,31 @@
 {
-  "name": "current-date",
-  "author": "MakeAwesomeHappen",
-  "version": "1.0.0",
-  "keywords": ["pebble-app"],
-  "private": true,
-  "dependencies": {},
-  "pebble": {
-    "displayName": "current-date",
-    "uuid": "6341bda1-6c4d-4765-84a2-bacb50a7fbf6",
-    "sdkVersion": "3",
-    "enableMultiJS": true,
-    "targetPlatforms": [
-      "aplite",
-      "basalt",
-      "chalk",
-      "diorite"
+    "author": "MakeAwesomeHappen",
+    "dependencies": {},
+    "keywords": [
+        "pebble-app"
     ],
-    "watchapp": {
-      "watchface": false
+    "name": "today-is",
+    "pebble": {
+        "displayName": "Current Date",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "dummy"
+        ],
+        "projectType": "native",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite"
+        ],
+        "uuid": "6341bda1-6c4d-4765-84a2-bacb50a7fbf6",
+        "watchapp": {
+            "watchface": false
+        }
     },
-    "messageKeys": [
-      "dummy"
-    ],
-    "resources": {
-      "media": []
-    }
-  }
+    "version": "1.0.0"
 }
