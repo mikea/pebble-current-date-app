@@ -1,5 +1,5 @@
 {
-    "author": "Mike Aizatsky",
+    "author": "mikea",
     "dependencies": {
         "pebble-clay": "^1.0.2"
     },
@@ -8,10 +8,11 @@
     ],
     "name": "today-is",
     "pebble": {
-        "displayName": "Today is",
+        "displayName": "Today Is",
         "enableMultiJS": true,
         "messageKeys": [
-            "APP_GLANCE_FMT"
+            "APP_GLANCE_FMT",
+            "APP_FMT"
         ],
         "projectType": "native",
         "resources": {
