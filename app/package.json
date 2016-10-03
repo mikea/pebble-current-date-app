@@ -1,16 +1,14 @@
 {
-    "author": "MakeAwesomeHappen",
+    "author": "Mike Aizatsky",
     "dependencies": {},
     "keywords": [
         "pebble-app"
     ],
     "name": "today-is",
     "pebble": {
-        "displayName": "Current Date",
+        "displayName": "Today is",
         "enableMultiJS": true,
-        "messageKeys": [
-            "dummy"
-        ],
+        "messageKeys": [],
         "projectType": "native",
         "resources": {
             "media": []
