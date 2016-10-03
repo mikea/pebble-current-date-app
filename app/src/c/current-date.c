@@ -2,7 +2,11 @@
 
 static Window *s_window;
 static TextLayer *s_text_layer;
-static char s_text_buffer[256];
+
+static char s_app_fmt[256];
+static char s_app_buffer[256];
+
+static char s_glance_fmt[256];
 static char s_glance_buffer[256];
 
 static void prv_select_click_handler(ClickRecognizerRef recognizer, void *context) {
@@ -35,7 +39,7 @@ static void prv_update_app_glance(AppGlanceReloadSession *session,
   if (limit < 1) return;
   
   time_t current_time = time(NULL);
-  if (!strftime(s_glance_buffer, sizeof s_text_buffer, DATE_FMT, localtime(&current_time))) {
+  if (!strftime(s_glance_buffer, sizeof s_text_buffer, s_glance_fmt, localtime(&current_time))) {
     APP_LOG(APP_LOG_LEVEL_ERROR, "strftime error");
   }
 
@@ -75,7 +79,28 @@ static void prv_window_unload(Window *window) {
   text_layer_destroy(s_text_layer);
 }
 
+static void prv_inbox_received_handler(DictionaryIterator *iter, void *context) {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "prv_inbox_received_handler");
+  Tuple *app_glance_fmt_t = dict_find(iter, MESSAGE_KEY_APP_GLANCE_FMT);
+  if (!app_glance_fmt_t) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Missing MESSAGE_KEY_APP_GLANCE_FMT");
+    return;
+  }  
+  if (app_glance_fmt_t->type != TUPLE_CSTRING) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Wring  app_glance_fmt_t type: %d", app_glance_fmt_t->type);
+    return;
+  }
+  
+  strcpy(s_glance_fmt, (const char*)app_glance_fmt_t->value);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "s_glance_fmt: %s", s_glance_fmt);
+}
+
 static void prv_init(void) {
+  strcpy(s_glance_fmt, "%x");
+  
+  app_message_register_inbox_received(prv_inbox_received_handler);
+  app_message_open(128, 128);
+
   s_window = window_create();
   window_set_click_config_provider(s_window, prv_click_config_provider);
   window_set_window_handlers(s_window, (WindowHandlers) {
@@ -90,7 +115,6 @@ static void prv_init(void) {
 
 static void prv_deinit(void) {
   window_destroy(s_window);
-
   app_glance_reload(prv_update_app_glance, NULL);
 }
 

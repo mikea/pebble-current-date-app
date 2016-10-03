@@ -1,6 +1,8 @@
 {
     "author": "Mike Aizatsky",
-    "dependencies": {},
+    "dependencies": {
+        "pebble-clay": "^1.0.2"
+    },
     "keywords": [
         "pebble-app"
     ],
@@ -8,7 +10,9 @@
     "pebble": {
         "displayName": "Today is",
         "enableMultiJS": true,
-        "messageKeys": [],
+        "messageKeys": [
+            "APP_GLANCE_FMT"
+        ],
         "projectType": "native",
         "resources": {
             "media": []
