@@ -32,20 +32,20 @@ var formats = [
 module.exports = [
   {
     "type": "heading",
-    "defaultValue": "App Configuration"
+    "defaultValue": "Today Is Configuration"
   },
   {
     "type": "select",
     "messageKey": "APP_FMT",
     "defaultValue": "%x",
-    "label": "Application Format",
+    "label": "Main Window Format",
     "options": formats
   },
   {
     "type": "select",
     "messageKey": "APP_GLANCE_FMT",
     "defaultValue": "%x",
-    "label": "Glance Format",
+    "label": "App Glance Format",
     "options": formats
   }, 
   {
