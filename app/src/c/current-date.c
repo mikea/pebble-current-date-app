@@ -33,8 +33,13 @@ static void prv_update_app_glance(AppGlanceReloadSession *session,
   APP_LOG(APP_LOG_LEVEL_DEBUG, "prv_update_app_glance");
   if (limit < 1) return;
   
-  time_t current_time = time(NULL);
-  if (!strftime(s_app_glance_buffer, sizeof s_app_glance_buffer, s_app_glance_fmt, localtime(&current_time))) {
+  time_t now = time(NULL);
+  time_t start_of_today = time_start_of_today();
+  time_t start_of_tomorrow = start_of_today + 24 * 60 * 60;
+  time_t expiration_time = now + 3600;
+  if (expiration_time > start_of_tomorrow) expiration_time = start_of_tomorrow;
+  
+  if (!strftime(s_app_glance_buffer, sizeof s_app_glance_buffer, s_app_glance_fmt, localtime(&now))) {
     APP_LOG(APP_LOG_LEVEL_ERROR, "strftime error");
   }
 
@@ -43,7 +48,7 @@ static void prv_update_app_glance(AppGlanceReloadSession *session,
       .icon = APP_GLANCE_SLICE_DEFAULT_ICON,
       .subtitle_template_string = s_app_glance_buffer
     },
-    .expiration_time = time(NULL)+3600
+    .expiration_time = expiration_time
   };
   const AppGlanceResult result = app_glance_add_slice(session, entry);
   if (result != APP_GLANCE_RESULT_SUCCESS) {
