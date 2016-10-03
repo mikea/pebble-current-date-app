@@ -65,8 +65,8 @@ static void prv_window_load(Window *window) {
   
   s_text_layer = text_layer_create(GRect(0, 72, bounds.size.w, 20));
     
-  if (strftime(s_text_buffer, sizeof s_text_buffer, DATE_FMT, localtime(&current_time))) {
-    text_layer_set_text(s_text_layer, s_text_buffer);
+  if (strftime(s_app_buffer, sizeof s_app_buffer, DATE_FMT, localtime(&current_time))) {
+    text_layer_set_text(s_text_layer, s_app_buffer);
   } else {
     text_layer_set_text(s_text_layer, "ERROR");
   }
@@ -97,6 +97,7 @@ static void prv_inbox_received_handler(DictionaryIterator *iter, void *context) 
 
 static void prv_init(void) {
   strcpy(s_glance_fmt, "%x");
+  strcpy(s_app_fmt, "%x");
   
   app_message_register_inbox_received(prv_inbox_received_handler);
   app_message_open(128, 128);
