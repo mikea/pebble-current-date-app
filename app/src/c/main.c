@@ -75,7 +75,7 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
 
   {
     const char *text = "Today Is";
-    GFont font = fonts_get_system_font(FONT_KEY_GOTHIC_14);
+    GFont font = fonts_get_system_font(FONT_KEY_GOTHIC_18);
     int height = font_get_height(font);
     GRect rect = GRect(bounds.origin.x, center - height, bounds.size.w, height);
     
@@ -84,7 +84,7 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
   }
                                             
   {
-    GFont font = fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD);
+    GFont font = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
     int height = font_get_height(font);
     GRect rect = GRect(bounds.origin.x, center, bounds.size.w, height);
 
