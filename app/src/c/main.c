@@ -54,6 +54,7 @@ static void prv_update_app_glance(AppGlanceReloadSession *session,
     if (result != APP_GLANCE_RESULT_SUCCESS) {
       APP_LOG(APP_LOG_LEVEL_ERROR, "AppGlance Error: %d", result);
     }
+    t = expiration_time;
   }
 }
 
