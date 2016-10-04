@@ -31,28 +31,29 @@ static void prv_update_app_glance(AppGlanceReloadSession *session,
                                   size_t limit,
                                   void *context) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "prv_update_app_glance");
-  if (limit < 1) return;
-  
-  time_t now = time(NULL);
-  time_t start_of_today = time_start_of_today();
-  time_t start_of_tomorrow = start_of_today + 24 * 60 * 60;
-  time_t expiration_time = now + 3600;
-  if (expiration_time > start_of_tomorrow) expiration_time = start_of_tomorrow;
-  
-  if (!strftime(s_app_glance_buffer, sizeof s_app_glance_buffer, s_app_glance_fmt, localtime(&now))) {
-    APP_LOG(APP_LOG_LEVEL_ERROR, "strftime error");
-  }
 
-  const AppGlanceSlice entry = (AppGlanceSlice) {
-    .layout = {
-      .icon = APP_GLANCE_SLICE_DEFAULT_ICON,
-      .subtitle_template_string = s_app_glance_buffer
-    },
-    .expiration_time = expiration_time
-  };
-  const AppGlanceResult result = app_glance_add_slice(session, entry);
-  if (result != APP_GLANCE_RESULT_SUCCESS) {
-    APP_LOG(APP_LOG_LEVEL_ERROR, "AppGlance Error: %d", result);
+  time_t t = time_start_of_today();
+  for (size_t i = 0; i < limit; ++i) {
+    struct tm* t_tm = gmtime(&t);
+    t_tm->tm_mday++;
+    time_t expiration_time = mktime(t_tm);
+      
+    if (!strftime(s_app_glance_buffer, sizeof s_app_glance_buffer, s_app_glance_fmt, localtime(&t))) {
+      APP_LOG(APP_LOG_LEVEL_ERROR, "strftime error");
+    }
+  
+    const AppGlanceSlice entry = (AppGlanceSlice) {
+      .layout = {
+        .icon = APP_GLANCE_SLICE_DEFAULT_ICON,
+        .subtitle_template_string = s_app_glance_buffer
+      },
+      .expiration_time = expiration_time
+    };
+    const AppGlanceResult result = app_glance_add_slice(session, entry);
+  
+    if (result != APP_GLANCE_RESULT_SUCCESS) {
+      APP_LOG(APP_LOG_LEVEL_ERROR, "AppGlance Error: %d", result);
+    }
   }
 }
 
@@ -196,7 +197,6 @@ static void prv_init(void) {
   app_message_set_context(s_window);
   app_message_register_inbox_received(prv_inbox_received_handler);
   app_message_open(128, 128);
-
 
   APP_LOG(APP_LOG_LEVEL_DEBUG, "init done.");
 }

@@ -8,6 +8,9 @@
     ],
     "name": "today-is",
     "pebble": {
+        "capabilities": [
+            "configurable"
+        ],
         "displayName": "Today Is",
         "enableMultiJS": true,
         "messageKeys": [
