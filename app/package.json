@@ -4,7 +4,7 @@
         "pebble-clay": "^1.0.2"
     },
     "keywords": [
-        "pebble-app"
+        "daily", "date", "today", "app glance", "glance"
     ],
     "name": "today-is",
     "pebble": {
@@ -45,5 +45,5 @@
             "watchface": false
         }
     },
-    "version": "1.0.0"
+    "version": "0.2"
 }
