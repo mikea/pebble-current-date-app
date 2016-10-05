@@ -5,6 +5,8 @@ Configurable format for both.
 
 Graphics by Sergey Ilin.
 
-![AppGlance Screenshot](screenshots/app_glance_square.png)
-![Window Screenshot](screenshots/app_square.png)
+![AppGlance Screenshot](screenshots/app_glance_square_steel_silver.png)
+
+
+![Window Screenshot](screenshots/app_round_red.png)
 
