@@ -8,9 +8,7 @@
     ],
     "name": "today-is",
     "pebble": {
-        "capabilities": [
-            "configurable"
-        ],
+        "capabilities": [ ],
         "displayName": "Today Is",
         "enableMultiJS": true,
         "messageKeys": [
@@ -26,6 +24,13 @@
                     "name": "IMAGE_TODAY_25",
                     "targetPlatforms": null,
                     "type": "bitmap"
+                }
+            ],
+            "publishedMedia": [
+                {
+                    "name": "TODAY_25",
+                    "id": 1,
+                    "glance": "TODAY_25_GLANCE_ICON"
                 }
             ]
         },
