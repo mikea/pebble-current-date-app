@@ -8,7 +8,6 @@
     ],
     "name": "today-is",
     "pebble": {
-        "capabilities": [ ],
         "displayName": "Today Is",
         "enableMultiJS": true,
         "messageKeys": [
