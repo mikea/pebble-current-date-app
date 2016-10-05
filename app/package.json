@@ -18,7 +18,7 @@
         "resources": {
             "media": [
                 {
-                    "file": "images/today_25",
+                    "file": "images/today-25.png",
                     "menuIcon": true,
                     "name": "IMAGE_TODAY_25",
                     "targetPlatforms": null,
@@ -27,9 +27,9 @@
             ],
             "publishedMedia": [
                 {
-                    "name": "TODAY_25",
+                    "name" : "TODAY_25",
                     "id": 1,
-                    "glance": "TODAY_25_GLANCE_ICON"
+                    "glance": "IMAGE_TODAY_25"
                 }
             ]
         },

@@ -44,7 +44,7 @@ static void prv_update_app_glance(AppGlanceReloadSession *session,
   
     const AppGlanceSlice entry = (AppGlanceSlice) {
       .layout = {
-        .icon = RESOURCE_ID_IMAGE_TODAY_25,
+        .icon = APP_GLANCE_SLICE_DEFAULT_ICON,
         .subtitle_template_string = s_app_glance_buffer
       },
       .expiration_time = expiration_time
