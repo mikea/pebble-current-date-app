@@ -1,5 +1,5 @@
 {
-    "author": "mikea",
+    "author": "High Panda",
     "dependencies": {
         "pebble-clay": "^1.0.2"
     },
@@ -19,7 +19,15 @@
         ],
         "projectType": "native",
         "resources": {
-            "media": []
+            "media": [
+                {
+                    "file": "images/today_25",
+                    "menuIcon": true,
+                    "name": "IMAGE_TODAY_25",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                }
+            ]
         },
         "sdkVersion": "3",
         "targetPlatforms": [
