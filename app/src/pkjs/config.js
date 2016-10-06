@@ -35,13 +35,13 @@ var formats = [
 module.exports = [
   {
     "type": "heading",
-    "defaultValue": "Today Is Configuration"
+    "defaultValue": "Display Configuration"
   },
   {
     "type": "select",
     "messageKey": "APP_FMT",
     "defaultValue": "%x",
-    "label": "Main Window Format",
+    "label": "App Format",
     "options": formats
   },
   {
