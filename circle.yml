@@ -11,4 +11,4 @@ dependencies:
 test:
   post:
     - cd app && docker run --rm -it -v $PWD:/pebble $PEBBLE_SDK pebble build
-    - cp build/pebble.pbw $CIRCLE_ARTIFACTS
+    - cp app/build/pebble.pbw $CIRCLE_ARTIFACTS
