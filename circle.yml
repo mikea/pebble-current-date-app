@@ -10,5 +10,4 @@ dependencies:
     
 test:
   post:
-    - cd app
-    - docker run --rm -it -v $PWD:/pebble skippa/docker-pebble-sdk pebble build
+    - cd app && docker run --rm -it -v $PWD:/pebble skippa/docker-pebble-sdk pebble build
