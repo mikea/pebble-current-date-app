@@ -8,5 +8,4 @@ dependencies:
     
 test:
   post:
-    - cd app
-    - docker run --rm -it -v $PWD:/pebble andredumas/pebble-dev build
+    - cd app && docker run --rm -it -v $PWD:/pebble andredumas/pebble-dev build
