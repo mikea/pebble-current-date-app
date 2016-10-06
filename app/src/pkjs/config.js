@@ -3,31 +3,46 @@ var formats = [
         "label": "Watch Default",
         "value": "%x" 
       }, { 
-        "label": "Thursday 01 Jan 2015",
+        "label": "31.01.2016",
+        "value": "%d.%m.%Y" 
+      }, { 
+        "label": "31.01.16",
+        "value": "%d.%m.%y" 
+      }, { 
+        "label": "01/31/2016",
+        "value": "%m/%d/%Y" 
+      }, { 
+        "label": "01/31/16",
+        "value": "%m/%d/%y" 
+      }, { 
+        "label": "Sunday 31 Jan 2016",
         "value": "%A %d %b %Y" 
       }, { 
-        "label": "Thursday 01 Jan 15",
+        "label": "Sunday 31 Jan 2016",
+        "value": "%A %d %b %Y" 
+      }, { 
+        "label": "Sunday 31 Jan 16",
         "value": "%A %d %b %y" 
       }, { 
-        "label": "Thu 01 Jan 15",
+        "label": "Sun 31 Jan 16",
         "value": "%a %d %b %y" 
       }, { 
-        "label": "01 Jan 15",
+        "label": "31 Jan 16",
         "value": "%d %b %y" 
       }, { 
-        "label": "01 Jan",
+        "label": "31 Jan",
         "value": "%d %b" 
       }, { 
-        "label": "01 January",
+        "label": "31 January",
         "value": "%d %B" 
       }, { 
-        "label": "January 01",
+        "label": "January 31",
         "value": "%B %d" 
       }, { 
-        "label": "Thu 01 Jan",
+        "label": "Sun 31 Jan",
         "value": "%a %d %b" 
       }, { 
-        "label": "Thursday",
+        "label": "Sunday",
         "value": "%A" 
       }
     ];
