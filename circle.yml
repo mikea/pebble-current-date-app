@@ -9,4 +9,4 @@ dependencies:
 test:
   post:
     - cd app
-    - docker run --rm -it -v $PWD:/pebble --entrypoint /bin/bash skippa/docker-pebble "/usr/bin/python /tool/pebble.py sdk install latest"
+    - docker run --rm -it -v $PWD:/pebble --entrypoint /bin/sh skippa/docker-pebble -c "/usr/bin/python /tool/pebble.py sdk install latest"
