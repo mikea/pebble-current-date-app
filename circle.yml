@@ -1,6 +1,6 @@
 machine:
   environment:
-    PEBBLE_SDK_VERSION: 4.1.4
+    PEBBLE_SDK: skippa/docker-pebble-sdk
   services:
     - docker
     
@@ -8,8 +8,9 @@ dependencies:
   cache_directories:
     - ~/.pebble-sdk
   pre:
-    - docker pull skippa/docker-pebble-sdk:$PEBBLE_SDK_VERSION
+    - docker pull $PEBBLE_SDK
     
 test:
   post:
-    - cd app && docker run --rm -it -v $PWD:/pebble skippa/docker-pebble-sdk:$PEBBLE_SDK_VERSION pebble build
+    - cd app && docker run --rm -it -v $PWD:/pebble $PEBBLE_SDK pebble build
+    - cp build/pebble.pbw $CIRCLE_ARTIFACTS
