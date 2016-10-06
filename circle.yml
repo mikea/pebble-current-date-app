@@ -1,14 +1,12 @@
 machine:
-  environment:
-    PEBBLE_SDK: skippa/docker-pebble-sdk
   services:
     - docker
     
 dependencies:
   pre:
-    - docker pull $PEBBLE_SDK
+    - docker pull skippa/docker-pebble-sdk
     
 test:
   post:
-    - cd app && docker run --rm -it -v $PWD:/pebble $PEBBLE_SDK pebble build
-    - 'export VER=$(perl -ne ''while(/version": "(.*)"/g){print "$1";}'' app/package.json) && cp app/build/pebble.pbw $CIRCLE_ARTIFACTS/pebble-$VER.pbw'
+    - docker build -t pebble-today-is . 
+    - docker run -ti -v $CIRCLE_ARTIFACTS:/out pebble-today-is

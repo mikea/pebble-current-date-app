@@ -7,11 +7,11 @@
 A minimalistic Pebble app. Current date at a glance and in the app.
 Configurable formats.
 
-
 Graphics by Sergey Ilin.
 
-![AppGlance Screenshot](screenshots/app_glance_square_steel_silver.png)
+[Developing](docs/developing.md)
 
+![AppGlance Screenshot](screenshots/app_glance_square_steel_silver.png)
 
 ![Window Screenshot](screenshots/app_round_red.png)
 
