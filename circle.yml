@@ -8,4 +8,5 @@ dependencies:
     
 test:
   post:
-    - cd app && docker run --rm -it -v $PWD:/pebble andredumas/pebble-dev build
+    - cd app
+    - docker run --rm -it -v $PWD:/pebble bboehmke/pebble-dev /bin/sh -c 'yes | pebble sdk install 4.1.4 && pebble build'
