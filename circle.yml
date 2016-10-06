@@ -11,4 +11,4 @@ dependencies:
 test:
   post:
     - cd app && docker run --rm -it -v $PWD:/pebble $PEBBLE_SDK pebble build
-    - cp app/build/pebble.pbw $CIRCLE_ARTIFACTS
+    - VER=$(perl -ne 'while(/version": "(.*)"/g){print "$1";}' app/package.json) cp app/build/pebble.pbw $CIRCLE_ARTIFACTS/pebble-$VER.pbw
