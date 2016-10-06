@@ -18,9 +18,6 @@ var formats = [
         "label": "Sunday 31 Jan 2016",
         "value": "%A %d %b %Y" 
       }, { 
-        "label": "Sunday 31 Jan 2016",
-        "value": "%A %d %b %Y" 
-      }, { 
         "label": "Sunday 31 Jan 16",
         "value": "%A %d %b %y" 
       }, { 
