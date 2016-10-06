@@ -5,9 +5,10 @@ machine:
 dependencies:
   pre:
     - docker pull skippa/docker-pebble
-    - mkdir .pebble-sdk && chmod g=rwx .pebble-sdk
+    - mkdir .pebble-sdk 
+    - chmod g=rwx .pebble-sdk
     - docker run --rm -it -v .pebble-sdk:/home/pebble/.pebble-sdk skippa/docker-pebble sdk install latest
     
 test:
   post:
-    - true
+    - echo "hello"
