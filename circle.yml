@@ -1,4 +1,6 @@
 machine:
+  environment:
+    PEBBLE_SDK_VERSION: 4.1.4
   services:
     - docker
     
@@ -6,8 +8,8 @@ dependencies:
   cache_directories:
     - ~/.pebble-sdk
   pre:
-    - docker pull skippa/docker-pebble-sdk
+    - docker pull skippa/docker-pebble-sdk:$PEBBLE_SDK_VERSION
     
 test:
   post:
-    - cd app && docker run --rm -it -v $PWD:/pebble skippa/docker-pebble-sdk pebble build
+    - cd app && docker run --rm -it -v $PWD:/pebble skippa/docker-pebble-sdk:$PEBBLE_SDK_VERSION pebble build
