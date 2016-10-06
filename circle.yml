@@ -6,9 +6,9 @@ dependencies:
   cache_directories:
     - ~/.pebble-sdk
   pre:
-    - docker pull skippa/docker-pebble
+    - docker pull skippa/docker-pebble-sdk
     
 test:
   post:
     - cd app
-    - docker run --rm -it -v $PWD:/pebble skippa/docker-pebble /bin/sh -c "python /tool/pebble.py build"
+    - docker run --rm -it -v $PWD:/pebble skippa/docker-pebble-sdk pebble build
