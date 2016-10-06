@@ -1,12 +1,13 @@
 {
+    "name": "today-is",
     "author": "High Panda",
+    "version": "0.3.0",
     "dependencies": {
         "pebble-clay": "^1.0.2"
     },
     "keywords": [
         "daily", "date", "today", "app glance", "glance"
     ],
-    "name": "today-is",
     "pebble": {
         "displayName": "Today Is",
         "enableMultiJS": true,
@@ -44,6 +45,5 @@
         "watchapp": {
             "watchface": false
         }
-    },
-    "version": "0.2"
+    }
 }
