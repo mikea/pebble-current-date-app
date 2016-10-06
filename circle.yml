@@ -4,7 +4,7 @@ machine:
     
 dependencies:
   cache_directories:
-    - $HOME/.pebble-sdk
+    - ~/.pebble-sdk
   pre:
     - docker pull skippa/docker-pebble
     - mkdir $HOME/.pebble-sdk
