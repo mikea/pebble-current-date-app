@@ -9,7 +9,9 @@ dependencies:
     - docker pull skippa/docker-pebble
     - mkdir pebble-sdk 
     - chmod g=rwx pebble-sdk
-    - docker run --rm -it -v $HOME/pebble-sdk:/home/pebble/.pebble-sdk skippa/docker-pebble /bin/sh -c "yes | python /tool/pebble.py sdk install latest"
+    - pwd
+    - echo $PWD $HOME
+    - docker run --rm -it -v $PWD/pebble-sdk:/home/pebble/.pebble-sdk skippa/docker-pebble /bin/sh -c "yes | python /tool/pebble.py sdk install latest"
     
 test:
   post:
