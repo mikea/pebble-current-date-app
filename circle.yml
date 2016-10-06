@@ -1,0 +1,8 @@
+dependencies:
+  pre:
+    - docker pull andredumas/pebble-dev
+    
+test:
+  post:
+    - cd apps
+    - docker run --rm -it -v $PWD:/pebble andredumas/pebble-dev build
