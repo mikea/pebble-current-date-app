@@ -11,7 +11,5 @@ Graphics by Sergey Ilin.
 
 [Developing](docs/developing.md)
 
-![AppGlance Screenshot](screenshots/app_glance_square_steel_silver.png)
-
-![Window Screenshot](screenshots/app_round_red.png)
+![AppGlance Screenshot](screenshots/app_glance_square_steel_silver.png) ![Window Screenshot](screenshots/app_round_red.png)
 
