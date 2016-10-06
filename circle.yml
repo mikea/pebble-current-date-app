@@ -8,5 +8,5 @@ dependencies:
     
 test:
   post:
-    - docker build -t CIRCLE_PROJECT_REPONAME . 
-    - docker run -ti -v $CIRCLE_ARTIFACTS:/out CIRCLE_PROJECT_REPONAME
+    - docker build -t $CIRCLE_PROJECT_REPONAME . 
+    - docker run -ti -v $CIRCLE_ARTIFACTS:/out $CIRCLE_PROJECT_REPONAME
