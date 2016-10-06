@@ -3,6 +3,9 @@ var formats = [
         "label": "Watch Default",
         "value": "%x" 
       }, { 
+        "label": "Thursday 01 Jan 2015",
+        "value": "%A %d %b %Y" 
+      }, { 
         "label": "Thursday 01 Jan 15",
         "value": "%A %d %b %y" 
       }, { 
