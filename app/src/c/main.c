@@ -7,23 +7,26 @@ static int font_get_height(GFont font, const char* text, int width) {
                                                GTextOverflowModeWordWrap, GTextAlignmentCenter).h;
 }
 
-static const char* tuple_find_cstring(DictionaryIterator *iter, uint32_t key) {
+static void tuple_find_cstring(DictionaryIterator *iter, 
+                               uint32_t key,
+                               char* buffer, 
+                               size_t buffer_size) {
   Tuple *t = dict_find(iter, key);
   if (!t) {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Missing key: %lu", (unsigned long) key);
-    return NULL;
+    return;
   }  
   if (t->type != TUPLE_CSTRING) {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Wrong %lu type: %d", (unsigned long) key, t->type);
-    return NULL;
+    return;
   }
-  return (const char*) t->value;
+  strncpy(buffer, (const char*) t->value, buffer_size);
 }
 
-static void storage_read(uint32_t key, char* buffer, const size_t buffer_size, const char* def) {
+static void storage_read(uint32_t key, char* buffer, size_t buffer_size, const char* def) {
   if (!persist_exists(key)) {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "Key %lu doesn't exist.", (unsigned long) key);
-    strcpy(buffer, def);
+    strncpy(buffer, def, buffer_size);
     return;
   }
   
@@ -153,9 +156,11 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
 static void prv_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
+
   s_canvas_layer = layer_create(bounds);
   layer_set_update_proc(s_canvas_layer, canvas_update_proc);
   layer_add_child(window_get_root_layer(window), s_canvas_layer);
+
   refresh_ui();
 }
 
@@ -165,16 +170,9 @@ static void prv_window_unload(Window *window) {
 
 static void prv_inbox_received_handler(DictionaryIterator *iter, void *context) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "prv_inbox_received_handler");
-  
-  const char* app_glance_fmt = tuple_find_cstring(iter, MESSAGE_KEY_APP_GLANCE_FMT);
-  if (app_glance_fmt) {
-    strcpy(s_app_glance_fmt, app_glance_fmt);
-  }
 
-  const char* app_fmt = tuple_find_cstring(iter, MESSAGE_KEY_APP_FMT);
-  if (app_fmt) {
-    strcpy(s_app_fmt, app_fmt);
-  }
+  tuple_find_cstring(iter, MESSAGE_KEY_APP_GLANCE_FMT, s_app_glance_fmt, sizeof s_app_glance_fmt);
+  tuple_find_cstring(iter, MESSAGE_KEY_APP_FMT, s_app_fmt, sizeof s_app_fmt);
 
   save_prefs();
   refresh_ui();
@@ -188,8 +186,7 @@ static void prv_init(void) {
     .load = prv_window_load,
     .unload = prv_window_unload,
   });
-  const bool animated = true;
-  window_stack_push(s_window, animated);
+  window_stack_push(s_window, true /* animated */);
 
   app_message_set_context(s_window);
   app_message_register_inbox_received(prv_inbox_received_handler);
