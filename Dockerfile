@@ -9,4 +9,5 @@ WORKDIR /pebble-today-is/
 CMD export APP_VERSION=$(jq -r '.version' package.json) && \
     pebble build && \
     mkdir -p $OUTPUT_DIR && \
+    rm -rf $OUTPUT_DIR/* && \
     cp -v build/pebble-today-is.pbw $OUTPUT_DIR/pebble-today-is.$APP_VERSION.pbw

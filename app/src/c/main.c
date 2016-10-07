@@ -2,9 +2,9 @@
 
 // ---------- REUSABLE STUFF ---------
 
-static int font_get_height(GFont font) {
-  return graphics_text_layout_get_content_size("Xy", font, GRect(0, 0, 100, 100), 
-                                               GTextOverflowModeFill, GTextAlignmentCenter).h;
+static int font_get_height(GFont font, const char* text, int width) {
+  return graphics_text_layout_get_content_size(text, font, GRect(0, 0, width, 1000), 
+                                               GTextOverflowModeWordWrap, GTextAlignmentCenter).h;
 }
 
 static const char* tuple_find_cstring(DictionaryIterator *iter, uint32_t key) {
@@ -121,25 +121,32 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
   GRect bounds = layer_get_bounds(layer);
   graphics_context_set_text_color(ctx, GColorBlack);
   int center = bounds.origin.y + (bounds.size.h / 2);
-//   graphics_draw_line(ctx, GPoint(bounds.origin.x, center), GPoint(bounds.size.w, center));
+  int width = bounds.size.w;
+  // graphics_draw_line(ctx, GPoint(bounds.origin.x, center), GPoint(width, center));
+
+  const char *labelText = "Today Is";
+  GFont labelFont = fonts_get_system_font(FONT_KEY_GOTHIC_24);
+  int labelHeight = font_get_height(labelFont, labelText, width);
+
+  const char *dateText = s_app_buffer;
+  GFont dateFont = fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD);
+  int dateHeight = font_get_height(dateFont, dateText, width);
+
+  int totalHeight = labelHeight + dateHeight;
+  int top = center - totalHeight / 2;
 
   {
-    const char *text = "Today Is";
-    GFont font = fonts_get_system_font(FONT_KEY_GOTHIC_24);
-    int height = font_get_height(font);
-    GRect rect = GRect(bounds.origin.x, center - height, bounds.size.w, height);
-    
+    GRect rect = GRect(bounds.origin.x, top, width, labelHeight);
+    // graphics_draw_rect(ctx, rect);
     graphics_draw_text(
-      ctx, text, font, rect, GTextOverflowModeWordWrap,  GTextAlignmentCenter, NULL);
+      ctx, labelText, labelFont, rect, GTextOverflowModeWordWrap,  GTextAlignmentCenter, NULL);
   }
                                             
   {
-    GFont font = fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD);
-    int height = font_get_height(font);
-    GRect rect = GRect(bounds.origin.x, center, bounds.size.w, height);
-
+    GRect rect = GRect(bounds.origin.x, top + labelHeight, width, dateHeight);
+    // graphics_draw_rect(ctx, rect);
     graphics_draw_text(
-      ctx, s_app_buffer, font, rect, GTextOverflowModeWordWrap,  GTextAlignmentCenter, NULL);
+      ctx, dateText, dateFont, rect, GTextOverflowModeWordWrap,  GTextAlignmentCenter, NULL);
   }
 }
 
