@@ -47,20 +47,20 @@ var formats = [
 module.exports = [
   {
     "type": "heading",
-    "defaultValue": "Display Configuration"
+    "defaultValue": "Data Format"
   },
   {
     "type": "select",
     "messageKey": "APP_FMT",
     "defaultValue": "%x",
-    "label": "App Format",
+    "label": "Application:",
     "options": formats
   },
   {
     "type": "select",
     "messageKey": "APP_GLANCE_FMT",
     "defaultValue": "%x",
-    "label": "App Glance Format",
+    "label": "App Glance:",
     "options": formats
   }, 
   {
