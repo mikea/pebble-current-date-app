@@ -1,4 +1,4 @@
-<h1><img src='app/resources/images/today-48.png'/>&nbsp;Today Is</h1>
+<h1><img src='app/resources/images/today-48.png' align='middle'/>&nbsp;Today Is</h1>
 
 [Pebble Appstore](https://apps.getpebble.com/en_US/application/57f1dc9405e4b1be61000122)
 
