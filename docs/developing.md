@@ -1,10 +1,10 @@
-# Building Application
-
-## LEGAL NOTE
+# LEGAL NOTE
 You must accept the [Pebble Terms of Use][TOS] and the [SDK License Agreement][LA] to use the Pebble SDK *and* to build this image.
 
 [TOS]: https://developer.getpebble.com/legal/terms-of-use/
 [LA]: https://developer.getpebble.com/legal/sdk-license/
+
+# Building Application
 
 ```bash
 # from project root
