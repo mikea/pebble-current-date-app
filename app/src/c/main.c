@@ -2,9 +2,11 @@
 
 // ---------- REUSABLE STUFF ---------
 
-static int font_get_height(GFont font, const char* text, int width) {
-  return graphics_text_layout_get_content_size(text, font, GRect(0, 0, width, 1000), 
-                                               GTextOverflowModeWordWrap, GTextAlignmentCenter).h;
+static int font_get_height(GFont font, const char* text, int width, GTextAttributes* attrs) {
+  GSize size = graphics_text_layout_get_content_size_with_attributes(
+    text, font, GRect(0, 0, width, 1000), 
+    GTextOverflowModeWordWrap, GTextAlignmentCenter, attrs);
+  return size.h;
 }
 
 static void tuple_find_cstring(DictionaryIterator *iter, 
@@ -58,6 +60,8 @@ static char s_app_buffer[256];
 
 static char s_app_glance_fmt[256];
 static char s_app_glance_buffer[256];
+
+static GTextAttributes *s_app_text_attributes;
 
 // ---------- APP PREFS ---------
 
@@ -129,11 +133,11 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
 
   const char *labelText = "Today Is";
   GFont labelFont = fonts_get_system_font(FONT_KEY_GOTHIC_24);
-  int labelHeight = font_get_height(labelFont, labelText, width);
+  int labelHeight = font_get_height(labelFont, labelText, width, NULL);
 
   const char *dateText = s_app_buffer;
   GFont dateFont = fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD);
-  int dateHeight = font_get_height(dateFont, dateText, width);
+  int dateHeight = font_get_height(dateFont, dateText, width, s_app_text_attributes);
 
   int totalHeight = labelHeight + dateHeight;
   int top = center - totalHeight / 2;
@@ -149,7 +153,7 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
     GRect rect = GRect(bounds.origin.x, top + labelHeight, width, dateHeight);
     // graphics_draw_rect(ctx, rect);
     graphics_draw_text(
-      ctx, dateText, dateFont, rect, GTextOverflowModeWordWrap,  GTextAlignmentCenter, NULL);
+      ctx, dateText, dateFont, rect, GTextOverflowModeWordWrap,  GTextAlignmentCenter, s_app_text_attributes);
   }
 }
 
@@ -161,11 +165,15 @@ static void prv_window_load(Window *window) {
   layer_set_update_proc(s_canvas_layer, canvas_update_proc);
   layer_add_child(window_get_root_layer(window), s_canvas_layer);
 
+  s_app_text_attributes = graphics_text_attributes_create();
+  graphics_text_attributes_enable_screen_text_flow(s_app_text_attributes, 5);
+
   refresh_ui();
 }
 
 static void prv_window_unload(Window *window) {
   layer_destroy(s_canvas_layer);
+  graphics_text_attributes_destroy(s_app_text_attributes);
 }
 
 static void prv_inbox_received_handler(DictionaryIterator *iter, void *context) {
