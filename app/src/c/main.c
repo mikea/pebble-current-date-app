@@ -94,10 +94,11 @@ static void save_prefs() {
 static void prv_update_app_glance(AppGlanceReloadSession *session, 
                                   size_t limit,
                                   void *context) {
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "prv_update_app_glance");
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "prv_update_app_glance, limit=%d", limit);
 
-  time_t t = time_start_of_today();
-  for (size_t i = 0; i < limit; ++i) {
+  if (limit < 1) return;
+    time_t t = time_start_of_today();
+
     struct tm* t_tm = gmtime(&t);
     t_tm->tm_mday++;
     time_t expiration_time = mktime(t_tm);
@@ -119,7 +120,6 @@ static void prv_update_app_glance(AppGlanceReloadSession *session,
       APP_LOG(APP_LOG_LEVEL_ERROR, "AppGlance Error: %d", result);
     }
     t = expiration_time;
-  }
 }
 
 static void refresh_ui() {
