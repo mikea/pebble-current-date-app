@@ -55,10 +55,11 @@ static void storage_write(uint32_t key, const char* buffer) {
 static Window *s_window;
 static Layer *s_canvas_layer;
 
-static char s_app_fmt[256];
+static char s_app_fmt[128];
+static char s_app_time_fmt[64];
 static char s_app_buffer[256];
 
-static char s_app_glance_fmt[256];
+static char s_app_glance_fmt[128];
 static char s_app_glance_buffer[256];
 
 static GTextAttributes *s_app_text_attributes;
@@ -68,10 +69,12 @@ static GTextAttributes *s_app_text_attributes;
 static void log_prefs() {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "  s_glance_fmt: %s", s_app_glance_fmt);
   APP_LOG(APP_LOG_LEVEL_DEBUG, "  s_app_fmt: %s", s_app_fmt);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "  s_app_time_fmt: %s", s_app_time_fmt);
 }
 
 static void read_prefs() {
   storage_read(MESSAGE_KEY_APP_FMT, s_app_fmt, sizeof s_app_fmt, "%x");
+  storage_read(MESSAGE_KEY_APP_TIME_FMT, s_app_time_fmt, sizeof s_app_time_fmt, "");
   storage_read(MESSAGE_KEY_APP_GLANCE_FMT, s_app_glance_fmt, sizeof s_app_glance_fmt, "%x");
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Read prefs:");
   log_prefs();
@@ -79,6 +82,7 @@ static void read_prefs() {
 
 static void save_prefs() {
   storage_write(MESSAGE_KEY_APP_FMT, s_app_fmt);
+  storage_write(MESSAGE_KEY_APP_TIME_FMT, s_app_time_fmt);
   storage_write(MESSAGE_KEY_APP_GLANCE_FMT, s_app_glance_fmt);
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Saved prefs:");
   log_prefs();
@@ -119,8 +123,12 @@ static void prv_update_app_glance(AppGlanceReloadSession *session,
 }
 
 static void refresh_ui() {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Refresh ui");
   time_t current_time = time(NULL);
-  strftime(s_app_buffer, sizeof s_app_buffer, s_app_fmt, localtime(&current_time));
+  static char s_fmt[255];
+  strcpy( s_fmt, "" );
+  snprintf( s_fmt, sizeof( s_fmt ), "%s\n%s", s_app_fmt, s_app_time_fmt );
+  strftime(s_app_buffer, sizeof s_app_buffer, s_fmt, localtime(&current_time));
   layer_mark_dirty(s_canvas_layer);
 }
 
@@ -157,6 +165,11 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
   }
 }
 
+static void handler_tick(struct tm *tick_time, TimeUnits units_changed) {
+  // force redraw if have time
+  if ( strlen(s_app_time_fmt) >0 ) refresh_ui();
+}
+
 static void prv_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
@@ -172,6 +185,7 @@ static void prv_window_load(Window *window) {
 }
 
 static void prv_window_unload(Window *window) {
+  tick_timer_service_unsubscribe();
   layer_destroy(s_canvas_layer);
   graphics_text_attributes_destroy(s_app_text_attributes);
 }
@@ -181,6 +195,7 @@ static void prv_inbox_received_handler(DictionaryIterator *iter, void *context) 
 
   tuple_find_cstring(iter, MESSAGE_KEY_APP_GLANCE_FMT, s_app_glance_fmt, sizeof s_app_glance_fmt);
   tuple_find_cstring(iter, MESSAGE_KEY_APP_FMT, s_app_fmt, sizeof s_app_fmt);
+  tuple_find_cstring(iter, MESSAGE_KEY_APP_TIME_FMT, s_app_time_fmt, sizeof s_app_time_fmt);
 
   save_prefs();
   refresh_ui();
@@ -195,6 +210,8 @@ static void prv_init(void) {
     .unload = prv_window_unload,
   });
   window_stack_push(s_window, true /* animated */);
+
+  tick_timer_service_subscribe(SECOND_UNIT, handler_tick);
 
   app_message_set_context(s_window);
   app_message_register_inbox_received(prv_inbox_received_handler);
