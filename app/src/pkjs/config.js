@@ -15,6 +15,9 @@ var formats = [
         "label": "01/31/16",
         "value": "%m/%d/%y" 
       }, { 
+        "label": "2016-01-31",
+        "value": "%F" 
+      }, { 
         "label": "Sunday 31 Jan 2016",
         "value": "%A %d %b %Y" 
       }, { 
@@ -43,6 +46,24 @@ var formats = [
         "value": "%A" 
       }
     ];
+var time_formats = [
+      { 
+        "label": "No time",
+        "value": "" 
+      }, { 
+        "label": "14:55",
+        "value": "%R" 
+      }, { 
+        "label": "14:55:02",
+        "value": "%T" 
+     }, { 
+        "label": "02:55 PM",
+        "value": "%I:%M %P" 
+      }, { 
+        "label": "02:55:02 pm",
+        "value": "%r" 
+     }
+    ];
 
 module.exports = [
   {
@@ -53,14 +74,21 @@ module.exports = [
     "type": "select",
     "messageKey": "APP_FMT",
     "defaultValue": "%x",
-    "label": "Application:",
+    "label": "Application date:",
     "options": formats
   },
   {
     "type": "select",
+    "messageKey": "APP_TIME_FMT",
+    "defaultValue": "%x",
+    "label": "App time:",
+    "options": time_formats
+  }, 
+  {
+    "type": "select",
     "messageKey": "APP_GLANCE_FMT",
     "defaultValue": "%x",
-    "label": "App Glance:",
+    "label": "App Glance date:",
     "options": formats
   }, 
   {

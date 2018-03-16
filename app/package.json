@@ -1,9 +1,9 @@
 {
     "name": "today-is",
     "author": "High Panda",
-    "version": "0.10.0",
+    "version": "0.11.0",
     "dependencies": {
-        "pebble-clay": "^1.0.2"
+        "pebble-clay": "^1.0.4"
     },
     "keywords": [
         "daily", "date", "today", "app glance", "glance"
@@ -13,7 +13,8 @@
         "enableMultiJS": true,
         "messageKeys": [
             "APP_GLANCE_FMT",
-            "APP_FMT"
+            "APP_FMT",
+            "APP_TIME_FMT"
         ],
         "projectType": "native",
         "resources": {
